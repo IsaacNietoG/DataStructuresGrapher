@@ -1,5 +1,6 @@
 package mx.unam.ciencias.edd.proyecto2;
 
+import java.io.File;
 import java.io.InputStreamReader;
 
 /**
@@ -29,11 +30,15 @@ import java.io.InputStreamReader;
  * De un lector de entrada, que es el encargado de recibir la entrada y convertirla a una String, también el encargado de
  * manejar las posibles excepciones en este paso.
  *
- * De un formador de estructuras, que convierte la entrada recibida a una instancia de la estructura de datos recibida, es
- * el encargado de verificar las posibles excepciones que puedan ocurrir de recibir una entrada no convertible a una EDD
+ * De un formador de peticiones, que recibe la String del paso anterior y la convierte en un objeto Peticion,
+ * que contiene la información sobre que estructura de datos se desea fabricar y el cuerpo de la misma.
+ * Este es el objeto designado a manejar todas las posibles excepciones que pudieran ocurrir durante este
+ * proceso.
  *
- * Una vez formada la estructura, se llamará a uno de los graficadores existentes, uno para cada estructura, que será el encargado
- * de formar los objetos SVG que representarán la estructura
+ * Una vez formada la petición, se llama a la Factory de graficadores, la cual crea el graficador correspondiente
+ * para la estructura de datos.
+ *
+ * El graficador asignado creará la hoja SVG correspondiente.
  *
  * La hoja SVG, que será el paso final y cuyo toString es justamente el código SVG necesario para graficar la EDD recibida.
  */
@@ -62,6 +67,20 @@ public class proyecto2 {
             uso();
 
         InputStreamReader entradaEstandar = new InputStreamReader(System.in);
+        File archivo = new File(args[0]);
+
+        //Obteniendo input
+        LectorEntrada lector = new LectorEntrada(entradaEstandar, archivo);
+
+        String input;
+        try{
+            input = lector.leerEntradas();
+        }catch(Exception e){
+            System.err.println(e);
+            uso();
+        }
+
+
     }
 
 }
