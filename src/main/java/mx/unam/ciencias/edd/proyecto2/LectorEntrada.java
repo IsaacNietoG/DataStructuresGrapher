@@ -55,7 +55,7 @@ public class LectorEntrada {
         return resultado;
     }
 
-    /*
+    /**
      * Lee la entrada estandar del programa y vacia todo a un objeto StringBuilder
      *
      * @return el objeto StringBuilder con la entrada obtenida

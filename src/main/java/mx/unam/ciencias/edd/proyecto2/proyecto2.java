@@ -3,6 +3,9 @@ package mx.unam.ciencias.edd.proyecto2;
 import java.io.File;
 import java.io.InputStreamReader;
 
+import mx.unam.ciencias.edd.proyecto2.Graficadores.GraficadorFactory;
+import mx.unam.ciencias.edd.proyecto2.Graficadores.Peticion;
+
 /**
  * Proyecto 2 para la materia de Estructuras de Datos impartida por el profesor Canek Pelaez Valdez
  * @author Isaac Julian Nieto Gallegos
@@ -72,13 +75,25 @@ public class proyecto2 {
         //Obteniendo input
         LectorEntrada lector = new LectorEntrada(entradaEstandar, archivo);
 
-        String input;
+        String input = "";
         try{
             input = lector.leerEntradas();
         }catch(Exception e){
-            System.err.println(e);
+            System.err.println("Error: " + e.getMessage());
             uso();
         }
+
+        //Formando peticion
+        FormadorPeticiones formador = new FormadorPeticiones(input);
+        try{
+            Peticion peticion = formador.formarPeticion();
+        }catch(Exception e){
+            System.err.println("Error: " + e.getMessage());
+            uso();
+        }
+
+        Graficador graficador = GraficadorFactory.crearGraficador(peticion);
+
 
 
     }
