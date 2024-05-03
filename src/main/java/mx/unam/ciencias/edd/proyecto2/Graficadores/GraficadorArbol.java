@@ -47,10 +47,13 @@ public abstract class GraficadorArbol implements Graficador{
         VerticeArbolBinario<Integer> target = vertice;
         int nivelTarget = nivel;
 
+        pilaVertices.mete(target);
+        pilaNivel.mete(nivelTarget);
+
         while(target.hayIzquierdo()){
+            target = target.izquierdo();
             pilaVertices.mete(target);
             pilaNivel.mete(++nivelTarget);
-            target = target.izquierdo();
         }
 
     }
@@ -91,7 +94,7 @@ public abstract class GraficadorArbol implements Graficador{
         VerticeArbolBinario<Integer> target = arbol.raiz();
         meteRamaIzquierda(target, 0);
 
-        int coordX = 0;
+        int coordX = 35;
         //Desplazamiento despues de cada insercion
         int cambioAltura = 25 * 2 + 50;
         int cambioAncho = 25 * 2 + 30;
@@ -100,18 +103,18 @@ public abstract class GraficadorArbol implements Graficador{
             target = pilaVertices.saca();
             int nivel = pilaNivel.saca();
 
-            int coordY = nivel * cambioAltura + 25;
+            int coordY = nivel * cambioAltura + 50;
 
             resultado.agregaElementoFinal(graficarVertice(target, coordX, coordY, 25));
-            coordX += cambioAncho;
 
             if(target.hayDerecho())
                 meteRamaIzquierda(target.derecho(), nivel+1);
 
             resultado.agregaElementoInicio(conectaVertice(target, coordX, coordY));
+            coordX += cambioAncho;
         }
 
-
+        resultado.actualizarDImensiones(calcularAlto(), coordX + 20);
         return resultado;
     }
 
@@ -170,17 +173,21 @@ public abstract class GraficadorArbol implements Graficador{
      *  @return el alto en pixeles de la hoja SVG
      *  */
     protected int calcularAlto(){
-        return arbol.altura() * 80;
+        return arbol.altura() * 150;
     }
 
     /**
      *  Calcula el ancho necesario de la hoja SVG para albergar todos los elementos del arbol, esto en base al ancho del ultimo
      *  nivel del mismo, que es el que en teoría debe albergar el doble de elementos que el resto del arbol
      *
+     *  Nota: Queria hacerlo asi, pero luego me di cuenta que no es tan facil hacerlo inicialmente lol, entonces mejor lo calculo
+     *  al final del proceso
+     *
+     *
      *  @return el ancho en pixeles de la hoja SVG
      *  */
     protected int calcularAncho(){
-        return (arbol.getElementos() / 2) * 50;
+        return (int)Math.pow(2, arbol.altura()) * 180;
     }
 
     /**

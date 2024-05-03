@@ -16,47 +16,47 @@ public class GraficadorFactory {
         Graficador retorno;
         switch(peticion.estructura){
             case "ArbolAVL":
-
+                retorno = new GraficadorArbolAVL(peticion.cuerpo);
                 break;
 
             case "ArbolBinarioCompleto":
-
+                retorno = new GraficadorArbolCompleto(peticion.cuerpo);
                 break;
 
             case "ArbolBinarioOrdenado":
-
+                retorno = null;
                 break;
 
             case "ArbolRojinegro":
-
+                retorno = null;
                 break;
 
             case "Arreglo":
-
+                retorno = null;
                 break;
 
             case "Cola":
-
+                retorno = null;
                 break;
 
             case "Grafica":
-
+                retorno = null;
                 break;
 
             case "Lista":
-
+                retorno = null;
                 break;
 
             case "MonticuloArreglo":
-
+                retorno = null;
                 break;
 
             case "MonticuloMinimo":
-
+                retorno = null;
                 break;
 
             case "Pila":
-
+                retorno = null;
                 break;
 
             default:

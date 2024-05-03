@@ -33,7 +33,7 @@ public class GraficadorArbolCompleto extends GraficadorArbol{
     protected String graficarVertice(VerticeArbolBinario<Integer> vertice, int centroX, int centroY, int radio) {
         return String.format("<circle cx='%d' cy='%d' r='%d' stroke='%s' stroke-width='3' fill='%s' />",
                 centroX, centroY, radio, "black", "white") +
-            String.format("<text x='%d' y='%d' text-anchor='middle'" +``
+            String.format("<text x='%d' y='%d' text-anchor='middle'" +
                 " font-family='sans-serif' font-size='%d' fill='%s'>%s</text>",
                 centroX, centroY + 5, 15, "black", vertice.get().toString());
     }
