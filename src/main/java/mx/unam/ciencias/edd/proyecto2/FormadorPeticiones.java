@@ -30,6 +30,14 @@ public class FormadorPeticiones {
         estructura = "";
     }
 
+    /**
+     *  Ordena el recorrido de la entrada con el metodo correspondiente, y luego crea la peticion correspondiente con los datos
+     *  obtenidos de la misma.
+     *
+     *  @throws MasDeUnaEstructuraDeclaradaException  si se encuentran más de dos declaraciones de estructura en el archivo,
+     *  pues se espera que solo se declare una estructura por archivo
+     *  @throws EstructuraVaciaException   si no se encuentran elementos para agregar a la estructura
+     *  */
     public Peticion formarPeticion() throws IOException, MasDeUnaEstructuraDeclaradaException, EstructuraVaciaException{
         recorrerEntrada();
         if(elementos.esVacia())
@@ -39,36 +47,47 @@ public class FormadorPeticiones {
     }
 
     private void recorrerEntrada() throws IOException, MasDeUnaEstructuraDeclaradaException{
+        String strlinea;
         char[] linea;
         //Iteracion por linea
-        while((linea = lector.readLine().toCharArray()) != null){
+        while((strlinea = lector.readLine()) != null){
+            linea = strlinea.toCharArray();
             //Iteracion por caracter
-            for(int i = 0; i<linea.length; i++){
+            int i = 0;
+            String numero = "";
+            String preEstructura = "";
+            while(i<linea.length){
                 char caracter = linea[i];
                 if(caracter == '#') // Para ignorar la documentacion de la entrada
                     break;
+                if(caracter == ' ') //Detectamos un espacio significa que el objeto a capturar ha terminado
+                    if(!numero.isEmpty()){
+                        elementos.agrega(Integer.valueOf(numero));
+                        numero = "";
+                    }else if(!preEstructura.isEmpty())
+                        if(estructura.isEmpty())
+                            estructura = preEstructura;
+                        else
+                            throw new MasDeUnaEstructuraDeclaradaException("La entrada recibida tiene declaradas dos o más estructuras para formar, verifique su entrada");
 
-                else if(Character.isDigit(caracter)){ //Si detecta un elemento, lo empieza a capturar
-                    String numero = "";
-                    while(Character.isDigit(caracter)){
-                        numero += caracter;
-                        caracter = linea[i++];
-                    }
-                    elementos.agrega(Integer.parseInt(numero));
+                if(Character.isDigit(caracter)){ //Si detecta un elemento, lo empieza a capturar
+                    numero += caracter;
                 }
 
-                else if(Character.isAlphabetic(caracter)){ //Si detecta un caracter, es el inicio del nombre de la estructura, idem
-                    if(!estructura.isEmpty()) //Si ya fue capturada una estructura, lanza la excepcion correspondiente
-                        throw new MasDeUnaEstructuraDeclaradaException("La entrada recibida tiene declaradas dos o más estructuras para formar, verifique su entrada");
+                if(Character.isAlphabetic(caracter)){ //Si detecta un caracter, es el inicio del nombre de la estructura, idem
+                    preEstructura += caracter;
+                }
 
-                    String preEstructura = "";
-                    while(Character.isAlphabetic(caracter)){
-                        preEstructura += caracter;
-                        caracter = linea[i++];
-                    }
+                i++;
+            } //Ultima verificacion, por si se nos queda un elemento pendiente
+            if(!numero.isEmpty()){
+                elementos.agrega(Integer.valueOf(numero));
+                numero = "";
+            }else if(!preEstructura.isEmpty())
+                if(estructura.isEmpty())
                     estructura = preEstructura;
-                }
-            }
+                else
+                    throw new MasDeUnaEstructuraDeclaradaException("La entrada recibida tiene declaradas dos o más estructuras para formar, verifique su entrada");
         }
     }
 

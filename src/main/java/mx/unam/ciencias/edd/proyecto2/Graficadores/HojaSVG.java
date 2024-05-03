@@ -19,6 +19,7 @@ public class HojaSVG {
 
     public HojaSVG(int alto, int ancho){
         dimensiones = String.format("<svg width='%d' height='%d'><g>", ancho, alto);
+        elementos = new Lista<>();
 
     }
 
@@ -40,6 +41,10 @@ public class HojaSVG {
      *  */
     public void agregaElementoFinal(String elemento){
         elementos.agregaFinal(elemento);
+    }
+
+    public void actualizarDImensiones(int alto, int ancho){
+        dimensiones = String.format("<svg width='%d' height='%d'><g>", ancho, alto);
     }
 
     /**

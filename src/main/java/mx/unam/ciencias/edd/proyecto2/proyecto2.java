@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 
 import mx.unam.ciencias.edd.proyecto2.Graficadores.GraficadorFactory;
 import mx.unam.ciencias.edd.proyecto2.Graficadores.Peticion;
+import mx.unam.ciencias.edd.proyecto2.Graficadores.Graficador;
 
 /**
  * Proyecto 2 para la materia de Estructuras de Datos impartida por el profesor Canek Pelaez Valdez
@@ -79,21 +80,29 @@ public class proyecto2 {
         try{
             input = lector.leerEntradas();
         }catch(Exception e){
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error durante la lectura de la entrada: " + e.getMessage());
             uso();
         }
 
         //Formando peticion
         FormadorPeticiones formador = new FormadorPeticiones(input);
+        Peticion peticion = null;
         try{
-            Peticion peticion = formador.formarPeticion();
+            peticion = formador.formarPeticion();
         }catch(Exception e){
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error durante la formacion de la estructura: " + e.getMessage());
             uso();
         }
 
-        Graficador graficador = GraficadorFactory.crearGraficador(peticion);
+        Graficador graficador = null;
+        try{
+            graficador = GraficadorFactory.crearGraficador(peticion);
+        }catch(Exception e){
+            System.err.println("Error durante el graficado: " + e.getMessage());
+            uso();
+        }
 
+        System.out.println(graficador.darHoja().toString());
 
 
     }

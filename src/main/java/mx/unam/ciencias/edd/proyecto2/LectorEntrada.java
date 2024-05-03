@@ -99,7 +99,7 @@ public class LectorEntrada {
         String renglon;
         try{
             while((renglon = reader.readLine()) != null){
-                retorno.append(renglon);
+                retorno.append(renglon + "\n");
             }
             reader.close();
         }catch (IOException e){
