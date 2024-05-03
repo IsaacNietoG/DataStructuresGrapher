@@ -24,11 +24,11 @@ public class GraficadorFactory {
                 break;
 
             case "ArbolBinarioOrdenado":
-                retorno = null;
+                retorno = new GraficadorArbolOrdenado(peticion.cuerpo);
                 break;
 
             case "ArbolRojinegro":
-                retorno = null;
+                retorno = new GraficadorArbolRojinegro(peticion.cuerpo);
                 break;
 
             case "Arreglo":

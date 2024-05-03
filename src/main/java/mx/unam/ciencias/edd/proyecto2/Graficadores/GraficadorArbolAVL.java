@@ -26,7 +26,9 @@ public class GraficadorArbolAVL extends GraficadorArbol{
      *  */
     @Override
     protected String graficarVertice(VerticeArbolBinario<Integer> vertice, int centroX, int centroY, int radio) {
-        String balance = String.valueOf(vertice.izquierdo().altura() - vertice.derecho().altura());
+        int alturaIzq = vertice.hayIzquierdo() ? vertice.izquierdo().altura() : 0;
+        int alturaDer = vertice.hayDerecho() ? vertice.derecho().altura() : 0;
+        String balance = String.valueOf(alturaIzq - alturaDer);
 
         return String.format("<circle cx='%d' cy='%d' r='%d' stroke='%s' stroke-width='3' fill='%s' />",
                 centroX, centroY, radio, "black", "white") +
@@ -35,6 +37,6 @@ public class GraficadorArbolAVL extends GraficadorArbol{
                 centroX, centroY + 5, 15, "black", vertice.get().toString()) +
             String.format("<text x='%d' y='%d' text-anchor='middle'" +
                 " font-family='sans-serif' font-size='%d' fill='%s'>%s</text>",
-                centroX, centroY + 20, 9, "black", "(" + vertice.altura() + "/" + balance + ")");
+                centroX, centroY - 35, 9, "black", "(" + vertice.altura() + "/" + balance + ")");
     }
 }
