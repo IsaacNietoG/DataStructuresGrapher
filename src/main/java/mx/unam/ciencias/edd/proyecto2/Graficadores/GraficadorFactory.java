@@ -32,7 +32,7 @@ public class GraficadorFactory {
                 break;
 
             case "Arreglo":
-                retorno = null;
+                retorno = new GraficadorArreglo(peticion.cuerpo);
                 break;
 
             case "Cola":
