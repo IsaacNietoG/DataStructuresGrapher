@@ -103,7 +103,7 @@ public abstract class GraficadorArbol implements Graficador{
             target = pilaVertices.saca();
             int nivel = pilaNivel.saca();
 
-            int coordY = nivel * cambioAltura + 50;
+            int coordY = nivel * cambioAltura + 110;
 
             resultado.agregaElementoFinal(graficarVertice(target, coordX, coordY, 25));
 

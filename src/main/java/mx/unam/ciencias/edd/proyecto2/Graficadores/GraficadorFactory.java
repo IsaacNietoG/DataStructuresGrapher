@@ -44,19 +44,15 @@ public class GraficadorFactory {
                 break;
 
             case "Lista":
-                retorno = null;
-                break;
-
-            case "MonticuloArreglo":
-                retorno = null;
+                retorno = new GraficadorLista(peticion.cuerpo);
                 break;
 
             case "MonticuloMinimo":
-                retorno = null;
+                retorno = new GraficadorMonticuloMinimo(peticion.cuerpo);
                 break;
 
             case "Pila":
-                retorno = null;
+                retorno = new GraficadorPila(peticion.cuerpo);
                 break;
 
             default:

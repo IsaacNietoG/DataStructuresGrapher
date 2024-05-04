@@ -32,6 +32,9 @@ public class GraficadorArreglo implements Graficador{
         return retorno;
     }
 
+    /**
+     *  Crea un rectangulo de 30x60 que representa un nodo del arreglo
+     *  */
     private String crearSlot(Integer elemento, int esquinaX, int esquinaY){
         return String.format("<text x='%d' y='%d' text-anchor='middle'" +
                              " font-family='sans-serif' font-size='%d' fill='%s'>%s</text>",

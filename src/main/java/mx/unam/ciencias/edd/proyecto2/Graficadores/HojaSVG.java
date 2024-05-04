@@ -1,3 +1,4 @@
+
 package mx.unam.ciencias.edd.proyecto2.Graficadores;
 
 import mx.unam.ciencias.edd.Lista;
@@ -13,12 +14,13 @@ public class HojaSVG {
     private static final String inicioSVG =
         "<?xml version='1.0' encoding='UTF-8' ?>\n";
 
-    private String dimensiones;
+    private int alto;
+    private int ancho;
     private Lista<String> elementos;
     private static final String finSVG = "</g></svg>";
 
     public HojaSVG(int alto, int ancho){
-        dimensiones = String.format("<svg width='%d' height='%d'><g>", ancho, alto);
+        actualizarDImensiones(alto, ancho);
         elementos = new Lista<>();
 
     }
@@ -44,7 +46,20 @@ public class HojaSVG {
     }
 
     public void actualizarDImensiones(int alto, int ancho){
-        dimensiones = String.format("<svg width='%d' height='%d'><g>", ancho, alto);
+        this.alto = alto;
+        this.ancho = ancho;
+    }
+
+    public int getAlto(){
+        return alto;
+    }
+
+    public int getAncho(){
+        return ancho;
+    }
+
+    public Lista<String> getElementos(){
+        return elementos;
     }
 
     /**
@@ -54,7 +69,7 @@ public class HojaSVG {
     public String toString(){
         StringBuffer string = new StringBuffer();
         string.append(inicioSVG);
-        string.append(dimensiones);
+        string.append(String.format("<svg width='%d' height='%d'><g>", ancho, alto));
         for(String elemento : elementos){
             string.append(elemento);
             string.append("\n");

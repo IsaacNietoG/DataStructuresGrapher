@@ -1,49 +1,38 @@
-
 package mx.unam.ciencias.edd.proyecto2.Graficadores;
 
-import mx.unam.ciencias.edd.IteradorLista;
 import mx.unam.ciencias.edd.Lista;
-
+import mx.unam.ciencias.edd.IteradorLista;
 /**
- * Graficador para Colas
+ * Graficador para listas
  *
- * Representa los nodos de la cola como rectángulos conectados por lineas, las cuales simbolizan la
- * dirección de la cola.
- * Debido a la naturaleza tan simple de dicha estructura, nos ahorramos crear una Cola, y en su lugar
- * considero que:
- * 1. Debido a la naturaleza first-in first-out de la Cola, el orden de los elementos de una Cola creada con
- * la lista que recibe el constructor preservaría el orden de la misma lista.
- * 2. Nos podemos ahorrar una vuelta para fabricar la cola considerando lo previo, si simplemente recorremos
- * la lista y vamos fabricando los nodos en ese orden.
+ * Representa los nodos y sus dobles conexiones, al ser listas doblemente ligadas
+ *
+ * Como desde un inicio, la estructura de datos que formamos y que integra nuestra Peticion para el
+ * GraficadorFactory es una lista, no necesitamos crear la estructura de datos subyacente.
+ *
  */
-public class GraficadorCola implements Graficador{
-
-    Lista<Integer> cola;
+public class GraficadorLista implements Graficador{
+    Lista<Integer> lista;
     //Definicion para el triangulo de la punta de la flecha
     public final String defFlecha = "<defs>\n<marker id='arrow' markerWidth='3' markerHeight='6' refX='3' refY='3' orient='auto'>\n<path d='M 0 0 L 3 3 L 0 6 z' fill='black' />\n</marker>\n</defs>";
 
-    public GraficadorCola(Lista<Integer> cuerpo){
-        cola = cuerpo;
+    public GraficadorLista(Lista<Integer> cuerpo){
+        lista = cuerpo;
     }
 
-    /**
-     *  Da la hoja SVG que representa a la cola
-     *
-     *  Recorre la lista de manera iterativa y va agregando flechas que representan la direccionalidad de la
-     *  cola.
-     *  */
     @Override
     public HojaSVG darHoja() {
-        HojaSVG retorno = new HojaSVG(60, (cola.getLongitud() * 50)-20);
+        HojaSVG retorno = new HojaSVG(60, (lista.getLongitud() * 50)-20);
         retorno.agregaElementoInicio(defFlecha);
         int cambioX = 0;
-        IteradorLista<Integer> iterador = cola.iteradorLista();
+        IteradorLista<Integer> iterador = lista.iteradorLista();
         //Agregamos cada nodo
         while(iterador.hasNext()){
             retorno.agregaElementoFinal(crearSlot(iterador.next(), cambioX, 0));
             cambioX += 30;
             if(iterador.hasNext()){
-                retorno.agregaElementoFinal(crearFlecha(cambioX, 35, cambioX+20, 35));
+                retorno.agregaElementoFinal(crearFlecha(cambioX, 25, cambioX+20, 25));
+                retorno.agregaElementoFinal(crearFlecha(cambioX+20, 35, cambioX, 35));
                 cambioX += 20;
             }
         }
@@ -52,7 +41,7 @@ public class GraficadorCola implements Graficador{
     }
 
     /**
-     *  Crea el rectangulo que representa el nodo de la cola con su elemento
+     *  Crea el rectangulo que representa el nodo de la lista con su elemento
      *  */
     private String crearSlot(Integer elemento, int esquinaX, int esquinaY){
         return String.format("<text x='%d' y='%d' text-anchor='middle'" +
@@ -69,4 +58,5 @@ public class GraficadorCola implements Graficador{
         return String.format("<line x1='%d' y1='%d' x2='%d' y2='%d' stroke='black' stroke-width='2' marker-end='url(#arrow)' />",
                              origenX, origenY, destinoX, destinoY);
     }
+
 }
